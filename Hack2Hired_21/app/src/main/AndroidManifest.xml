@@ -28,10 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.activity.BookDetailsActivity"
-            android:parentActivityName=".activity.activity.MainActivity" />
-        <activity android:name=".activity.activity.BookSearchActivity"></activity>
+        <activity android:name=".activity.activity.BookDetailsActivity" />
+        <activity android:name=".activity.activity.BookSearchActivity"
+            android:parentActivityName=".activity.activity.MainActivity" ></activity>
     </application>
 
 </manifest>

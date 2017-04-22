@@ -1,10 +1,12 @@
 package com.example.choonhee.hack2hired_21.activity;
 
+import java.io.Serializable;
+
 /**
  * Created by calvinlow on 22/04/2017.
  */
 
-public class Book {
+public class Book implements Serializable {
 
     private String name;
     private String ISBN;
@@ -50,5 +52,16 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                ", desc='" + desc + '\'' +
+                ", author='" + author + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

@@ -10,4 +10,5 @@
     <string name="font_awesome_area_chart_icon">&#xf26e;</string>
     <string name="font_awesome_cubes_icon">&#xf1b3;</string>
     <string name="font_awesome_mobile_phone_icon">&#xf10b;</string>
+    <string name="searchAndIcon"> Search    &#xf002;</string>
 </resources>

@@ -158,19 +158,18 @@ public class BookDetailsActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            Book book = books.get(position);
-            Log.d("Book", book.toString());
+            BookStorePrice bookStorePrice = bookStorePrices.get(position);
 
-            convertView = mInflater.inflate(R.layout.book_retrieved_item, parent, false);
+            convertView = mInflater.inflate(R.layout.book_store_item, parent, false);
 
-            TextView title = (TextView) convertView.findViewById(R.id.book_title);
-            TextView author = (TextView) convertView.findViewById(R.id.book_author);
-            ImageView bookImage = (ImageView) convertView.findViewById(R.id.book_img);
+            TextView name = (TextView) convertView.findViewById(R.id.bookstore_name);
+            TextView price = (TextView) convertView.findViewById(R.id.book_price);
+            //ImageView bookImage = (ImageView) convertView.findViewById(R.id.book_img);
 
-            title.setText(book.getName());
-            author.setText(book.getAuthor());
+            name.setText(bookStorePrice.getName());
+            price.setText("RM " + bookStorePrice.getPrice());
 
-            Picasso.with(getBaseContext()).load(book.getImageUrl()).into(bookImage);
+            //Picasso.with(getBaseContext()).load(book.getImageUrl()).into(bookImage);
 
             return convertView;
         }

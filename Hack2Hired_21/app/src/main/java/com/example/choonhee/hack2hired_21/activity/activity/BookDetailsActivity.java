@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookDetailsActivity extends AppCompatActivity {
@@ -42,7 +44,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private ListView bookStoreList;
 
-    private List<BookStorePrice> bookStorePrices;
+    private List<BookStorePrice> bookStorePrices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +73,13 @@ public class BookDetailsActivity extends AppCompatActivity {
         bookStoreAdapter = new BookStoreAdapter(getBaseContext(), R.layout.book_store_item, bookStorePrices);
 
         bookStoreList.setAdapter(bookStoreAdapter);
+
+        getBookStorePrice(book.getISBN());
     }
 
     private void getBookStorePrice(String isbn) {
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        String url = "http://localhost:8080/api/book/getDeal?isbn=" + isbn;
+        String url = "http://172.16.0.91:8080/api/book/getDeal?isbn=" + isbn;
 
         Log.d("Get Book Prices", url);
 
@@ -87,9 +91,35 @@ public class BookDetailsActivity extends AppCompatActivity {
 
                 try {
                     JSONObject allBookStorePrices = new JSONObject(response);
-                    JSONObject bookurve = allBookStorePrices.get("bookurve");
-                    JSONObject mph = allBookStorePrices.get("MPH");
-                    JSONObject bookxcessonline = allBookStorePrices.get("");
+                    JSONObject bookurve = (JSONObject) allBookStorePrices.get("Bookurve");
+                    JSONObject mph = (JSONObject) allBookStorePrices.get("MPH");
+                    JSONObject bookxcessonline = (JSONObject) allBookStorePrices.get("BookXcessOnline");
+
+                    if (bookurve != null) {
+                        BookStorePrice bookStorePrice = new BookStorePrice();
+                        bookStorePrice.setName("Bookurve");
+                        bookStorePrice.setPrice((Double) bookurve.get("price"));
+                        bookStorePrice.setUrl((String) bookurve.get("url"));
+                        bookStorePrices.add(bookStorePrice);
+                    }
+
+                    if (mph != null) {
+                        BookStorePrice bookStorePrice = new BookStorePrice();
+                        bookStorePrice.setName("MPH");
+                        bookStorePrice.setPrice((Double) mph.get("price"));
+                        bookStorePrice.setUrl((String) mph.get("url"));
+                        bookStorePrices.add(bookStorePrice);
+                    }
+
+                    if (bookxcessonline != null) {
+                        BookStorePrice bookStorePrice = new BookStorePrice();
+                        bookStorePrice.setName("BookXcessOnline");
+                        bookStorePrice.setPrice((Double) bookxcessonline.get("price"));
+                        bookStorePrice.setUrl((String) bookxcessonline.get("url"));
+                        bookStorePrices.add(bookStorePrice);
+                    }
+
+                    bookStoreAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,14 +128,15 @@ public class BookDetailsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+                Toast.makeText(BookDetailsActivity.this, "Please try again Later", Toast.LENGTH_SHORT).show();
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
                 builder.setMessage("Sorry, error occured. Please try again.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 finish();
                             }
                         });
-                builder.create().show();
+                builder.create().show();*/
                 //Log.d("Error", error.getMessage());
             }
         });
@@ -127,11 +158,21 @@ public class BookDetailsActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View view = convertView;
+            Book book = books.get(position);
+            Log.d("Book", book.toString());
 
-            if (view != null) {
-            }
-            return super.getView(position, convertView, parent);
+            convertView = mInflater.inflate(R.layout.book_retrieved_item, parent, false);
+
+            TextView title = (TextView) convertView.findViewById(R.id.book_title);
+            TextView author = (TextView) convertView.findViewById(R.id.book_author);
+            ImageView bookImage = (ImageView) convertView.findViewById(R.id.book_img);
+
+            title.setText(book.getName());
+            author.setText(book.getAuthor());
+
+            Picasso.with(getBaseContext()).load(book.getImageUrl()).into(bookImage);
+
+            return convertView;
         }
     }
 }

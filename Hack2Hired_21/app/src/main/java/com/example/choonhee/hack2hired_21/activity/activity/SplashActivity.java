@@ -1,9 +1,11 @@
-package com.example.choonhee.hack2hired_21;
+package com.example.choonhee.hack2hired_21.activity.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.choonhee.hack2hired_21.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run(){
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         },3000);
     }

@@ -40,7 +40,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
+        <com.example.choonhee.hack2hired_21.activity.font.FontAwesomeTextView
             android:id="@+id/recommended_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

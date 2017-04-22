@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.choonhee.hack2hired_21.activity.activity.BookSearchActivity">
+
+    <TextView
+        android:id="@+id/search_book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title Of Book"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="45dp" />
+
+    <ListView
+        android:layout_width="115dp"
+        android:layout_height="643dp"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="166dp" />
+</android.support.constraint.ConstraintLayout>

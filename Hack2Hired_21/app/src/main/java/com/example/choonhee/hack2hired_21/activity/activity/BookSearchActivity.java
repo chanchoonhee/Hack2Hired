@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -124,14 +125,15 @@ public class BookSearchActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
                 builder.setMessage("Sorry, error occured. Please try again.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 finish();
                             }
                         });
-                builder.create().show();
+                builder.create().show();*/
+                Toast.makeText(BookSearchActivity.this, "Please try again later.", Toast.LENGTH_SHORT).show();
                 //Log.d("Error", error.getMessage());
             }
         });

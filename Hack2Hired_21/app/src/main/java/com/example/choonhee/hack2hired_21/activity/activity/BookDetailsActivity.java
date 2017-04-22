@@ -89,20 +89,26 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Log.d("resp", response);
                 bookStorePrices.clear();
 
+                JSONObject allBookStorePrices = null;
                 try {
-                    JSONObject allBookStorePrices = new JSONObject(response);
-                    JSONObject bookurve = (JSONObject) allBookStorePrices.get("Bookurve");
-                    JSONObject mph = (JSONObject) allBookStorePrices.get("MPH");
-                    JSONObject bookxcessonline = (JSONObject) allBookStorePrices.get("BookXcessOnline");
+                    allBookStorePrices = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                    if (bookurve != null) {
-                        BookStorePrice bookStorePrice = new BookStorePrice();
-                        bookStorePrice.setName("Bookurve");
-                        bookStorePrice.setPrice((Double) bookurve.get("price"));
-                        bookStorePrice.setUrl((String) bookurve.get("url"));
-                        bookStorePrices.add(bookStorePrice);
+                try {
+                    if (!allBookStorePrices.getJSONObject("Best").get("Deal").equals("")) {
+
                     }
 
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject mph = null;
+                try {
+                    mph = (JSONObject) allBookStorePrices.get("MPH");
                     if (mph != null) {
                         BookStorePrice bookStorePrice = new BookStorePrice();
                         bookStorePrice.setName("MPH");
@@ -110,7 +116,27 @@ public class BookDetailsActivity extends AppCompatActivity {
                         bookStorePrice.setUrl((String) mph.get("url"));
                         bookStorePrices.add(bookStorePrice);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+                JSONObject bookurve = null;
+                try {
+                    bookurve = (JSONObject) allBookStorePrices.get("Bookurve");
+                    if (bookurve != null) {
+                        BookStorePrice bookStorePrice = new BookStorePrice();
+                        bookStorePrice.setName("Bookurve");
+                        bookStorePrice.setPrice((Double) bookurve.get("price"));
+                        bookStorePrice.setUrl((String) bookurve.get("url"));
+                        bookStorePrices.add(bookStorePrice);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    JSONObject bookxcessonline = (JSONObject) allBookStorePrices.get("BookXcessOnline");
                     if (bookxcessonline != null) {
                         BookStorePrice bookStorePrice = new BookStorePrice();
                         bookStorePrice.setName("BookXcessOnline");
@@ -119,10 +145,12 @@ public class BookDetailsActivity extends AppCompatActivity {
                         bookStorePrices.add(bookStorePrice);
                     }
 
-                    bookStoreAdapter.notifyDataSetChanged();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                bookStoreAdapter.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {

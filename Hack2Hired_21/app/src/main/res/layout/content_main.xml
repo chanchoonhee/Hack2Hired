@@ -54,13 +54,13 @@
         tools:layout_editor_absoluteY="307dp"
         tools:layout_editor_absoluteX="0dp" />
 
-    <Button
+    <com.example.choonhee.hack2hired_21.activity.font.FontAwesomeButton
         android:id="@+id/search_button"
         style="@style/AppTheme"
         android:layout_width="210dp"
         android:layout_height="48dp"
         android:background="?android:attr/statusBarColor"
-        android:text="Search"
+        android:text="@string/searchAndIcon"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -40,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,7 +234,8 @@ public class BookDetailsActivity extends AppCompatActivity {
             //ImageView bookImage = (ImageView) convertView.findViewById(R.id.book_img);
 
             name.setText(bookStorePrice.getName());
-            price.setText("RM " + bookStorePrice.getPrice());
+            DecimalFormat decimalFormat = new DecimalFormat("####0.00");
+            price.setText("RM " + decimalFormat.format(bookStorePrice.getPrice()));
             if (bookStorePrice.getName().equals(recommendedBookStore)) {
                 ImageView recommendedIcon = (ImageView) convertView.findViewById(R.id.recommended_icon);
                 recommendedIcon.setVisibility(View.VISIBLE);

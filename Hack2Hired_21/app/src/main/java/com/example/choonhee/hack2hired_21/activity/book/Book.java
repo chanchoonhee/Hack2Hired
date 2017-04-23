@@ -1,4 +1,4 @@
-package com.example.choonhee.hack2hired_21.activity;
+package com.example.choonhee.hack2hired_21.activity.book;
 
 import java.io.Serializable;
 

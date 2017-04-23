@@ -30,11 +30,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.choonhee.hack2hired_21.R;
-import com.example.choonhee.hack2hired_21.activity.Book;
-import com.example.choonhee.hack2hired_21.activity.BookStorePrice;
+import com.example.choonhee.hack2hired_21.activity.book.Book;
+import com.example.choonhee.hack2hired_21.activity.book.BookStorePrice;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

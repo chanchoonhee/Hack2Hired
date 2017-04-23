@@ -11,14 +11,16 @@ public class BookStorePrice implements Comparator<BookStorePrice> {
     private String name;
     private Double price;
     private String url;
+    private boolean recommended;
 
     public BookStorePrice() {
     }
 
-    public BookStorePrice(String name, Double price, String url) {
+    public BookStorePrice(String name, Double price, String url,boolean recommended) {
         this.name = name;
         this.price = price;
         this.url = url;
+        this.recommended = recommended;
     }
 
     public String getName() {
@@ -43,6 +45,13 @@ public class BookStorePrice implements Comparator<BookStorePrice> {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isRecommended(){
+        return recommended;
+    }
+    public void setRecommended(boolean recommended){
+        this.recommended = recommended;
     }
 
     @Override

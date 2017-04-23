@@ -189,7 +189,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(BookDetailsActivity.this, "Please try again Later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookDetailsActivity.this, "Please try again later", Toast.LENGTH_SHORT).show();
                 /*AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
                 builder.setMessage("Sorry, error occured. Please try again.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -239,9 +239,18 @@ public class BookDetailsActivity extends AppCompatActivity {
                 recommendedIcon.setVisibility(View.VISIBLE);
             }
 
-            if (bookStorePrice.getName().equals("Bookurve")) {
-                ImageView bookImg = (ImageView) convertView.findViewById(R.id.book_img);
-                bookImg.setImageResource(R.drawable.bookurve);
+            ImageView bookImg = (ImageView) convertView.findViewById(R.id.book_img);
+
+            switch (bookStorePrice.getName()) {
+                case "Bookurve":
+                    bookImg.setImageResource(R.drawable.bookurve);
+                    break;
+                case "MPH":
+                    bookImg.setImageResource(R.drawable.mphonline);
+                    break;
+                case "BookXcessOnline":
+                    bookImg.setImageResource(R.drawable.bookxcess);
+                    break;
             }
 
             //Picasso.with(getBaseContext()).load(book.getImageUrl()).into(bookImage);

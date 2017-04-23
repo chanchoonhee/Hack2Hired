@@ -81,7 +81,7 @@ public class BookSearchActivity extends AppCompatActivity {
 
     private void getBook(String title) {
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        String url = "http://172.16.0.91:8080/api/book/getBooks?bookTitle=" + title;
+        String url = "http://172.16.0.91:8080/api/book/getBooks?bookTitle=" + title.replace(" ", "%20");
 
         Log.d("Get Book Request", url);
 

@@ -2,6 +2,8 @@ package com.example.choonhee.hack2hired_21.activity.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,6 +49,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private List<BookStorePrice> bookStorePrices = new ArrayList<>();
 
+    private String recommendedBookStore = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +79,17 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         bookStoreList.setAdapter(bookStoreAdapter);
 
+        bookStoreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BookStorePrice bookStorePrice = bookStorePrices.get(position);
+                String url = bookStorePrice.getUrl();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
         getBookStorePrice(book.getISBN());
     }
 
@@ -98,7 +114,53 @@ public class BookDetailsActivity extends AppCompatActivity {
 
                 try {
                     if (!allBookStorePrices.getJSONObject("Best").get("Deal").equals("")) {
+                        recommendedBookStore = (String) allBookStorePrices.getJSONObject("Best").get("Deal");
 
+                        JSONObject mph = null;
+                        try {
+                            mph = (JSONObject) allBookStorePrices.get("MPH");
+                            if (mph != null) {
+                                BookStorePrice bookStorePrice = new BookStorePrice();
+                                bookStorePrice.setName("MPH");
+                                bookStorePrice.setPrice((Double) mph.get("price"));
+                                bookStorePrice.setUrl((String) mph.get("url"));
+                                bookStorePrices.add(bookStorePrice);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        JSONObject bookurve = null;
+                        try {
+                            bookurve = (JSONObject) allBookStorePrices.get("Bookurve");
+                            if (bookurve != null) {
+                                BookStorePrice bookStorePrice = new BookStorePrice();
+                                bookStorePrice.setName("Bookurve");
+                                bookStorePrice.setPrice((Double) bookurve.get("price"));
+                                bookStorePrice.setUrl((String) bookurve.get("url"));
+                                bookStorePrices.add(bookStorePrice);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+                            JSONObject bookxcessonline = (JSONObject) allBookStorePrices.get("BookXcessOnline");
+                            if (bookxcessonline != null) {
+                                BookStorePrice bookStorePrice = new BookStorePrice();
+                                bookStorePrice.setName("BookXcessOnline");
+                                bookStorePrice.setPrice((Double) bookxcessonline.get("price"));
+                                bookStorePrice.setUrl((String) bookxcessonline.get("url"));
+                                bookStorePrices.add(bookStorePrice);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(BookDetailsActivity.this, "No results found!", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -106,49 +168,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                JSONObject mph = null;
-                try {
-                    mph = (JSONObject) allBookStorePrices.get("MPH");
-                    if (mph != null) {
-                        BookStorePrice bookStorePrice = new BookStorePrice();
-                        bookStorePrice.setName("MPH");
-                        bookStorePrice.setPrice((Double) mph.get("price"));
-                        bookStorePrice.setUrl((String) mph.get("url"));
-                        bookStorePrices.add(bookStorePrice);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONObject bookurve = null;
-                try {
-                    bookurve = (JSONObject) allBookStorePrices.get("Bookurve");
-                    if (bookurve != null) {
-                        BookStorePrice bookStorePrice = new BookStorePrice();
-                        bookStorePrice.setName("Bookurve");
-                        bookStorePrice.setPrice((Double) bookurve.get("price"));
-                        bookStorePrice.setUrl((String) bookurve.get("url"));
-                        bookStorePrices.add(bookStorePrice);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    JSONObject bookxcessonline = (JSONObject) allBookStorePrices.get("BookXcessOnline");
-                    if (bookxcessonline != null) {
-                        BookStorePrice bookStorePrice = new BookStorePrice();
-                        bookStorePrice.setName("BookXcessOnline");
-                        bookStorePrice.setPrice((Double) bookxcessonline.get("price"));
-                        bookStorePrice.setUrl((String) bookxcessonline.get("url"));
-                        bookStorePrices.add(bookStorePrice);
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                
 
                 bookStoreAdapter.notifyDataSetChanged();
 
@@ -196,6 +216,15 @@ public class BookDetailsActivity extends AppCompatActivity {
 
             name.setText(bookStorePrice.getName());
             price.setText("RM " + bookStorePrice.getPrice());
+            if (bookStorePrice.getName().equals(recommendedBookStore)) {
+                ImageView recommendedIcon = (ImageView) convertView.findViewById(R.id.recommended_icon);
+                recommendedIcon.setVisibility(View.VISIBLE);
+            }
+
+            if (bookStorePrice.getName().equals("Bookurve")) {
+                ImageView bookImg = (ImageView) convertView.findViewById(R.id.book_img);
+                bookImg.setImageResource(R.drawable.bookurve);
+            }
 
             //Picasso.with(getBaseContext()).load(book.getImageUrl()).into(bookImage);
 

@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="282dp"
+                android:layout_width="264dp"
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:textAlignment="center"

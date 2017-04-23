@@ -16,6 +16,7 @@
             android:id="@+id/book_img"
             android:layout_width="111dp"
             android:layout_height="76dp"
+            android:padding="10dp"
             app:srcCompat="@drawable/ic_launcher" />
 
         <LinearLayout
@@ -40,15 +41,16 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <com.example.choonhee.hack2hired_21.activity.font.FontAwesomeTextView
+        <ImageView
             android:id="@+id/recommended_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_weight="3.89"
-            android:text="@string/font_awesome_area_chart_icon"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/recommended_icon"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </RelativeLayout>

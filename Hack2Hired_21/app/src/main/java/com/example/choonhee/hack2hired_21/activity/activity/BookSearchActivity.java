@@ -18,9 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -103,7 +105,6 @@ public class BookSearchActivity extends AppCompatActivity {
                             book.setImageUrl(imageUrl);
                             book.setISBN(isbn);
                             books.add(book);
-
                         }
 
                         bookSearchAdapter.notifyDataSetChanged();
@@ -131,6 +132,11 @@ public class BookSearchActivity extends AppCompatActivity {
                 //Log.d("Error", error.getMessage());
             }
         });
+
+        int socketTimeout = 30000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        stringRequest.setRetryPolicy(policy);
 
         requestQueue.add(stringRequest);
 
